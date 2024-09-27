@@ -1,51 +1,35 @@
 import './App.css';
-import {useState, useEffect} from 'react';
-
+import './styles/main.css'
+import SafeText from './components/SafeText';
+import LeftSection from './components/LeftSection';
+import IconList from './components/RightSection';
 
 function App() {
-  const [data, setData] = useState(null);
-  const [error, setError] = useState(null);
+  
+  const today = new Date().toString().padStart(2, '0');;
 
-  // Provided API key and parameters
-  const apiKey = 'ST9W4WW508Z6XV06';
-  const pageNo = '1';
-  const numOfRows = '10';
-  const crtDt = '20240101';
-  const rgnNm = '1';
-
-  // API endpoint
-  const url = `safeText/V2/api/DSSP-IF-00247?serviceKey=${apiKey}&pageNo=${pageNo}&numOfRows=${numOfRows}`;
-
-
-  useEffect(() => {
-    console.log('Fetching URL:', url);
-    fetch(url)
-      .then((response) => {
-        console.log(response)
-        if (!response.ok) {
-          throw new Error(`Error: ${response.status} ${response.statusText}`);
-        }
-        return response.json(); 
-      })
-      .then((data) => {
-        setData(data); 
-      })
-      .catch((error) => {
-        setError(error.message); 
-      });
-  }, [url]);
-
-
-
+  console.log(today);
   return (
-    <div>
-      <h1>Data Fetcher</h1>
-      {error && <p>Error: {error}</p>}
-      {data ? (
-        <pre>{JSON.stringify(data, null, 2)}</pre> // Display fetched data
-      ) : (
-        <p>Loading...</p> // Show loading message while fetching
-      )}
+    <div className="background">
+      <LeftSection/>
+      <section className="right">
+        
+        <h2>재난보관함</h2>
+        <div className="content">
+          <h4>대피요령</h4>
+          <div className="icon-box">
+            <IconList/>
+          </div>
+          <h4>최근재난문자</h4>
+          <div>
+            {/* <SafeText pageNo='1' numOfRows='3'/> */}
+          </div>
+          <div>
+
+          </div>
+        
+        </div>
+      </section>
     </div>
   );
 };

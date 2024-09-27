@@ -1,0 +1,146 @@
+/**메인페이지*/
+.background { 
+  height: 100vh;               
+  width: 100%;    
+  display: flex;
+  position: relative; 
+  background: url('../assets/img/background.png');
+  background-size: cover;
+}
+
+.background::before {
+  content: "";     
+  position: absolute; 
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(8, 8, 8, 0.5); 
+  z-index: 1;
+}
+
+/*왼쪽 섹션*/
+.background .left{
+    display: flex;
+    flex-direction:column;
+    justify-content: centers;
+    width: 45%;
+    padding-left: 10%;
+    z-index: 2;
+    margin-left: 10%;
+}
+
+@media (max-width: 768px) {
+    .background .left {
+        display: none;
+    }
+    .background .right {
+        width: 100% !important;
+    }
+}
+.background .left div{
+    
+}
+.background .left div:first-child{
+
+    margin-top: 80px; 
+    margin-bottom:60px;
+}
+
+
+.background .left h1{
+    color:#fff;
+    text-align:left;
+    position:relative;
+    opacity: 0.7;
+    line-height: 20px;
+}
+
+.background .left h1 span{
+    color:#d64317;
+}
+
+.background .left div ul{ 
+    list-style-type: none;
+    margin: 0px;
+    padding: 0px;
+}
+.background .left ul li {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.background .left ul li img{
+    width: 50px;    
+    height: auto;
+    margin-right: 10px;
+}
+
+.background .left ul li .text-content {
+    display: flex;
+    flex-direction: column; 
+}
+.background .left li h5{
+    color: #ffffff;
+    opacity: 1;
+    margin:0
+}
+.background .left li span{
+    color:#ffffff;
+    font-size:11px;
+    opacity: 0.7;
+    margin:0
+    
+}
+
+
+/*오른쪽 섹션*/
+.background .right{
+    
+    width: 55%;
+    background-color: #d65317; 
+    z-index: 2;
+    padding-left: 2%;
+    padding-right: 2%;
+    
+}    
+.background .right h2{
+    color:#ffffff ;
+    
+}  
+
+.background .right .content{
+    display: flex;
+    flex-direction:column;
+    width: 100%;
+    z-index: 2;
+    border-radius: 20px 20px 0 0;
+    background-color: #ffffff;
+}
+.background .right .content h4{
+    margin-left:20px;
+}
+
+.background .right .content .icon-box {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap:wrap;
+   
+} 
+.background .right .content .icon-box button {
+    display: flex;
+    flex-direction: column; 
+    flex: 1 1 calc(20% - 10px);
+    margin: 5px 5px;
+    align-items: center; 
+} 
+.background .right .content div img{
+    width: 30px;
+    display: inline; 
+    margin-bottom: 10px; 
+}
+.background .right .content .icon-box span {
+    display: inline-block;
+    text-align: center; 
+}
