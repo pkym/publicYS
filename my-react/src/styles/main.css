@@ -1,148 +1,164 @@
-/**메인페이지*/
-.background { 
-  height: 100vh;               
-  width: 100%;    
-  display: flex;
-  position: relative; 
-  background: url('../assets/img/background.png');
-  background-size: cover;
+@charset "utf-8";
+
+/******************** 공통 ********************/
+body,
+button,
+a {
+  font-family: "Pretendard", sans-serif;
 }
 
-.background::before {
-  content: "";     
-  position: absolute; 
+.background {
+  position: absolute;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: rgba(8, 8, 8, 0.5); 
+  height: 100vh;
+  width: 100%;
+  background: url("../assets/img/background.png");
+  background-size: cover;
+}
+
+.background::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(8, 8, 8, 0.5);
+  z-index: 1;
+}
+
+.wrapper {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  width: 960px;
+  margin: 0 auto;
   z-index: 1;
 }
 
 /*왼쪽 섹션*/
-.background .left{
-    display: flex;
-    flex-direction:column;
-    justify-content: centers;
-    width: 45%;
-    padding-left: 10%;
-    z-index: 2;
-    margin-left: 10%;
+section.left {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 45%;
+  z-index: 2;
 }
 
-@media (max-width: 768px) {
-    .background .left {
-        display: none;
-    }
-    .background .right {
-        width: 100% !important;
-        margin-right:0 !important;
-    }
-}
-.background .left div{
-    
-}
-.background .left div:first-child{
-
-    margin-top: 80px; 
-    margin-bottom:60px;
+section.left .title {
+  width: 260px;
 }
 
-
-.background .left h1{
-    color:#fff;
-    text-align:left;
-    position:relative;
-    opacity: 0.7;
-    line-height: 20px;
+section.left .info-ul {
+  margin-top: 64px;
 }
 
-.background .left h1 span{
-    color:#d64317;
+section.left h1 {
+  color: #fff;
+  text-align: left;
+  position: relative;
+  opacity: 0.7;
+  line-height: 20px;
 }
 
-.background .left div ul{ 
-    list-style-type: none;
-    margin: 0px;
-    padding: 0px;
-}
-.background .left ul li {
-    display: flex;
-    align-items: center;
-    margin-bottom: 20px;
+section.left h1 span {
+  color: #d64317;
 }
 
-.background .left ul li img{
-    width: 50px;    
-    height: auto;
-    margin-right: 10px;
+section.left div ul {
+  list-style-type: none;
+  margin: 0px;
+  padding: 0px;
+}
+section.left .info-ul li {
+  display: flex;
+  align-items: flex-start;
+  margin-bottom: 20px;
 }
 
-.background .left ul li .text-content {
-    display: flex;
-    flex-direction: column; 
-}
-.background .left li h5{
-    color: #ffffff;
-    opacity: 1;
-    margin:0
-}
-.background .left li span{
-    color:#ffffff;
-    font-size:11px;
-    opacity: 0.7;
-    margin:0
-    
+section.left .info-ul li img {
+  width: 50px;
+  height: auto;
+  margin-right: 10px;
 }
 
+section.left .info-ul li h5 {
+  margin-bottom: 4px;
+  color: #ffffff;
+  font-weight: 700;
+}
+section.left .info-ul li p {
+  color: #c4c4c4;
+  font-size: 14px;
+  line-height: 1.3;
+}
 
 /*오른쪽 섹션*/
-.background .right{
-    
-    width: 55%;
-    background-color: #d65317; 
-    z-index: 2;
-    margin-right:15%;
-    padding-left: 2%;
-    padding-right: 2%;
-    
-}    
-.background .right h2{
-    color:#ffffff ;
-    
-}  
-
-.background .right .content{
-    display: flex;
-    flex-direction:column;
-    width: 100%;
-    z-index: 2;
-    border-radius: 20px 20px 0 0;
-    background-color: #ffffff;
+section.right {
+  width: 630px;
+  height: 100vh;
+  padding: 24px 16px;
+  background-color: #d65317;
+  z-index: 2;
 }
-.background .right .content h4{
-    margin-left:20px;
+section.right .logo {
+  width: 154px;
+  margin-bottom: 20px;
 }
 
-.background .right .content .icon-box {
-    display: flex;
-    justify-content: space-between;
-    flex-wrap:wrap;
-   
-} 
-.background .right .content .icon-box button {
-    display: flex;
-    flex-direction: column; 
-    flex: 1 1 calc(20% - 10px);
-    margin: 5px 5px;
-    align-items: center; 
-} 
-.background .right .content div img{
-    width: 30px;
-    display: inline; 
-    margin-bottom: 10px; 
+section.right .content {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  min-height: 800px;
+  padding: 20px 14px;
+  z-index: 2;
+  border-radius: 16px;
+  background-color: #ffffff;
 }
-.background .right .content .icon-box span {
-    display: inline-block;
-    text-align: center; 
+section.right .content h4 {
+  margin: 40px 0 16px;
+  font-size: 20px;
+  font-weight: 700;
+}
+section.right .content h4:first-of-type {
+  margin-top: 0;
+}
+
+section.right .content .icon-box {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+section.right .content .icon-box button {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 calc(20% - 10px);
+  margin: 5px 5px;
+  align-items: center;
+}
+section.right .content div img {
+  width: 30px;
+  display: inline;
+  margin-bottom: 10px;
+}
+section.right .content .icon-box span {
+  display: inline-block;
+  text-align: center;
+}
+
+/******************** 반응형 ********************/
+@media (max-width: 768px) {
+  section.left {
+    display: none;
+  }
+  section.right {
+    width: 100% !important;
+    margin-right: 0 !important;
+  }
 }
