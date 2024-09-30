@@ -16,22 +16,22 @@ const ICONS = [
 ];
 
 function Icons({ image, title}) {
-    return (
-      <>
-        <img src={image} alt="..." />
-        <span>{title}</span>        
-      </>
-    );
-  }
-  
+  return (
+    <button>
+      <figure className="ico-wrap">
+        <img src={image} alt="" />
+      </figure>
+      <span className='txt'>{title}</span>        
+    </button>
+  );
+}
 
 export default function IconList(){
-    return(
-        <div className='icon-box'>
-          {ICONS.map((item)=>(
-            <button><Icons key={item.title} {...item}/></button>
-          ))}
-        </div>
-  
-      )
+  return(
+    <div className='icon-box'>
+      {ICONS.map((item)=>(
+        <Icons key={item.title} {...item}/>
+      ))}
+    </div>
+  )
 }

@@ -1,4 +1,5 @@
 import {useState, useEffect} from 'react';
+import SafeTextItem from "./SafeTextItem"
 
 // Provided API key and parameters
 const apiKey = 'ST9W4WW508Z6XV06';
@@ -9,13 +10,11 @@ const apiKey = 'ST9W4WW508Z6XV06';
 
 // API endpoint
 
-
-export default function SafeText({pageNo, numOfRows, date, regNum}){
-    const [data, setData] = useState(null);
-    const [error, setError] = useState(null);
+export default function SafeTextList({pageNo, numOfRows, date, regNum}){
+    const [data, setData] = useState([]);
     
     const url = `safeText/V2/api/DSSP-IF-00247?serviceKey=${apiKey}&pageNo=${pageNo}&numOfRows=${numOfRows}`;
- 
+
     useEffect(() => {
         console.log('Fetching URL:', url);
         fetch(url)
@@ -27,27 +26,25 @@ export default function SafeText({pageNo, numOfRows, date, regNum}){
             return response.json(); 
         })
         .then((data) => {
-            setData(data); 
+            setData(data.body);
         })
         .catch((error) => {
-            setError(error.message); 
+            console.log("error:"+error)
         });
     }, [url]);
-
-    {error && console.log("error:"+{error})}
     
-
     return(
-
-<div>
-      
-      {data ? (
-        <pre>{JSON.stringify(data, null, 2)}</pre> // Display fetched data
-      ) : (
-        <p>Loading...</p> // Show loading message while fetching
-      )}
-    </div>
-
-
+        <>
+            {data ? 
+                // Display fetched data
+                (
+                    Object.values(data).map((values)=>(
+                        <SafeTextItem params={values} key={values.SN}/>
+                    ))
+                ) : (
+                    <p>Loading...</p> // Show loading message while fetching
+                )
+            }
+        </>
     )
 }
