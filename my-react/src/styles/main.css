@@ -132,7 +132,7 @@ section.right .content {
   width: calc(100% - 32px);
   min-height: 800px;
   margin: 0 16px;
-  padding: 20px 20px 100px;
+  padding: 20px 20px 140px;
   z-index: 2;
   border-radius: 16px;
   background-color: #ffffff;
@@ -283,6 +283,11 @@ section.right .content .icon-box span {
 }
 .emergency-shelter-ul .desc {
   font-size: 14px;
+}
+.emergency-shelter-ul .tel {
+  margin-top: 8px;
+  font-size: 13px;
+  color: #aaa;
 }
 
 /******************** 반응형 ********************/
