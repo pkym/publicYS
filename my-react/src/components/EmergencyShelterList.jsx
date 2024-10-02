@@ -35,7 +35,7 @@ export default function EmergencyShelterList({}){
       {data ?
         (
             Object.values(data).map((values)=>(
-                <EmergencyShelterItem params={values}/>
+                <EmergencyShelterItem params={values} key={values.id}/>
             ))
         ) : (
             <p>Loading...</p>
