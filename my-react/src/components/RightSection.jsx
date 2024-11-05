@@ -1,3 +1,4 @@
+import React, { useState } from 'react';
 import logoImg from "../assets/img/logo_wt.png";
 import homeImg from "../assets/icon/home-active.svg"
 import archiveImg from "../assets/icon/archive-stack-line.svg"
@@ -8,7 +9,9 @@ import IconList from "./IconList";
 import SafeTextList from "./SafeTextList"
 import EmergencyShelterList from "./EmergencyShelterList";
 
-export default function RightSection() {
+export default function RightSection(props) {
+  const [showMoreBtn, setShowMoreBtn] = useState(false);
+
   return (
     <section className="right">
       <h2 className="logo">
@@ -25,11 +28,12 @@ export default function RightSection() {
           <button type="button" className="btn-more">더보기</button>
         </div>
         <h4>긴급 대피소</h4>
+        <p>*3개까지만 표시됩니다. 자세한 정보는 '대피소 정보'를 확인해주세요.</p>
         <div className="box">
           <ul className="emergency-shelter-ul">
-            <EmergencyShelterList/>
+            <EmergencyShelterList setShowMoreBtn={setShowMoreBtn}/>
           </ul>
-          <button type="button" className="btn-more">더보기</button>
+          {showMoreBtn && <button type="button" className="btn-more">더보기</button>}
         </div>
       </div>
 

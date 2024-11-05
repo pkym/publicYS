@@ -2,24 +2,22 @@ import { useState, useEffect } from "react";
 import EmergencyShelterItem from "./EmergencyShelterItem";
 
 // Provided API key and parameters
-const apiKey =
-  "Z67lDD5584KUF%2BGcDc2iij53yVrZ48k9IF62W7qZi0cg0N8tQz4EECztBTN3YhCbQN8j4VdztRhe3LEIKpyveQ%3D%3D";
-const pageNo = "1"; //페이지번호
-const numOfRows = "5"; //페이지당 개수
+// const apiKey =
+//   "Z67lDD5584KUF%2BGcDc2iij53yVrZ48k9IF62W7qZi0cg0N8tQz4EECztBTN3YhCbQN8j4VdztRhe3LEIKpyveQ%3D%3D";
+// const pageNo = "1"; //페이지번호
+// const numOfRows = "5"; //페이지당 개수
 
 // API endpoint
 
-export default function EmergencyShelterList() {
-  const [data, setData] = useState([]);
+export default function EmergencyShelterList(props) {
   const [sidoData, setSidoData] = useState([]);
-  const [sidoCode, setSidoCode] = useState("");
   const [sigunguData, setSigunguData] = useState([]);
-  const [sigunguCode, setSigunguCode] = useState("");
   const [emdongData, setEmdongData] = useState([]);
-  const [emdongCode, setEmdongCode] = useState("");
   const [shelterData, setShelterData] = useState([]);
-
-  const url = `https://apis.data.go.kr/1741000/TsunamiShelter4/getTsunamiShelter4List?serviceKey=${apiKey}&pageNo=${pageNo}&numOfRows=${numOfRows}&type=json`;
+  const [sidoCode, setSidoCode] = useState("");
+  const [emdongCode, setEmdongCode] = useState("");
+  const [isSelected, setIsSelected] = useState(false);
+  const [emptyData, setEmptyData] = useState(false);
 
   function selectSidoHandler() {
     const sidoUrl =
@@ -41,9 +39,10 @@ export default function EmergencyShelterList() {
 
   function getSidoCodeHandler(e) {
     setSidoCode(e.target.value);
+    selectSigunguHandler(e.target.value);
   }
 
-  function selectSigunguHandler() {
+  function selectSigunguHandler(sidoCode) {
     const sigunguUrl = `shelter/idsiSFK/neo/ext/json/arcd/bd/${sidoCode}/bd_sgg.json?_=1728528610170`;
     fetch(sigunguUrl)
       .then((response) => {
@@ -61,10 +60,10 @@ export default function EmergencyShelterList() {
   }
 
   function getSigunguCodeHandler(e) {
-    setSigunguCode(e.target.value);
+    selectEmdongHandler(e.target.value);
   }
 
-  function selectEmdongHandler() {
+  function selectEmdongHandler(sigunguCode) {
     const emdongUrl = `shelter/idsiSFK/neo/ext/json/arcd/bd/${sidoCode}/${sigunguCode}/bd_emd.json?_=1728528610171`;
     fetch(emdongUrl)
       .then((response) => {
@@ -86,6 +85,7 @@ export default function EmergencyShelterList() {
   }
 
   function searchShelterHandler() {
+    setIsSelected(true);
     const shelterUrl = `shelter/idsiSFK/neo/ext/json/outhouseList/outhouseList_${emdongCode}.json?_=1728528610172`;
     fetch(shelterUrl)
       .then((response) => {
@@ -96,6 +96,8 @@ export default function EmergencyShelterList() {
       })
       .then((data) => {
         setShelterData(data);
+        data.length === 0 ? setEmptyData(true) : setEmptyData(false);
+        data.length > 3 ? props.setShowMoreBtn(true) : props.setShowMoreBtn(false);
       })
       .catch((error) => {
         console.log("error:" + error);
@@ -103,21 +105,8 @@ export default function EmergencyShelterList() {
   }
 
   useEffect(() => {
-    fetch(url)
-      .then((response) => {
-        console.log(response);
-        if (!response.ok) {
-          throw new Error(`Error: ${response.status} ${response.statusText}`);
-        }
-        return response.json();
-      })
-      .then((data) => {
-        setData(data.TsunamiShelter[1].row);
-      })
-      .catch((error) => {
-        console.log("error:" + error);
-      });
-  }, [url]);
+    selectSidoHandler();  // 첫 렌더링 시 시도 정보 미리 불러오기
+  }, []);
 
   return (
     <>
@@ -125,7 +114,6 @@ export default function EmergencyShelterList() {
         className="form-select"
         name="sido"
         id="sido"
-        onClick={selectSidoHandler}
         onChange={getSidoCodeHandler}
       >
         <option value="1">시도 선택</option>
@@ -139,7 +127,6 @@ export default function EmergencyShelterList() {
         className="form-select"
         name="sigungu"
         id="sigungu"
-        onClick={selectSigunguHandler}
         onChange={getSigunguCodeHandler}
       >
         <option value="1">시군구 선택</option>
@@ -153,7 +140,6 @@ export default function EmergencyShelterList() {
         className="form-select"
         name="emdong"
         id="emdong"
-        onClick={selectEmdongHandler}
         onChange={getEmdongCodeHandler}
       >
         <option value="1">읍면동 선택</option>
@@ -170,22 +156,15 @@ export default function EmergencyShelterList() {
       >
         검색
       </button>
-
-      {shelterData.length > 0 ? (
-        shelterData.map((data) => (
-          <EmergencyShelterItem params={data} key={data.VT_ACMD_FCLTY_NM} />
-        ))
-      ) : (
-        <p>데이터가 없습니다.</p>
-      )}
-
-      {/* {data ? (
-        Object.values(data).map((values) => (
-          <EmergencyShelterItem params={values} key={values.id} />
-        ))
-      ) : (
-        <p>Loading...</p>
-      )} */}
+      {
+        (!isSelected ? <p>위치를 선택해주세요.</p> : 
+          !emptyData ? (
+            shelterData.slice(0,3).map(data => (
+              <EmergencyShelterItem params={data} key={data.VT_ACMD_FCLTY_NM} />
+            ))
+          ) : <p>데이터가 없습니다.</p>
+        )
+      }
     </>
   );
 }
