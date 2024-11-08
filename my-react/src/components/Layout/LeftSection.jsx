@@ -1,8 +1,8 @@
-import boxImg from "../assets/img/box.png";
-import runImg from "../assets/img/run.png";
-import warnImg from "../assets/img/warn.png";
-import mainCopyImg from "../assets/img/main_copy.png";
-import InfoList from "./InfoList";
+import boxImg from "../../assets/img/box.png";
+import runImg from "../../assets/img/run.png";
+import warnImg from "../../assets/img/warn.png";
+import mainCopyImg from "../../assets/img/main_copy.png";
+import InfoList from "../InfoList";
 
 const INFOS = [
   {
