@@ -1,35 +1,41 @@
-import React from 'react';
-import { useNavigate } from 'react-router-dom';
-import homeImg from "../assets/icon/home-active.svg"
-import archiveImg from "../assets/icon/archive-stack-line.svg"
-import runImg from "../assets/icon/run-fill.svg"
+import React, {useState} from 'react';
+import { NavLink } from 'react-router-dom';
+import homeActiveImg from "../assets/icon/home-fill.svg"
+import homeImg from "../assets/icon/home-line.svg"
+import safeTextImg from "../assets/icon/archive-stack-line.svg"
+import safeTextActiveImg from "../assets/icon/archive-stack-fill.svg"
+import runImg from "../assets/icon/run-line.svg"
+import runActiveImg from "../assets/icon/run-fill.svg"
 import alarmImg from "../assets/icon/alarm-warning-line.svg"
+import alarmActiveImg from "../assets/icon/alarm-warning-fill.svg"
 import peopleImg from "../assets/icon/group-line.svg"
+import peopleActiveImg from "../assets/icon/group-fill.svg"
 
 export default function MainNavigation() {
-  const navigate = useNavigate();
+  const [isActive, setIsActive] = useState("home");
+
   return (
     <nav className="dockbar">
-      <button type="button" className="active" onClick={() => navigate('/')}>
-        <img src={homeImg} alt=""/>
+      <NavLink to="/" onClick={() => setIsActive("home")}>
+        <img src={isActive === "home" ? homeActiveImg : homeImg} alt=""/>
         <span>메인</span>
-      </button>
-      <button type="button" onClick={() => navigate('/safeText')}>
-        <img src={archiveImg} alt=""/>
+      </NavLink>
+      <NavLink to="/safeText" onClick={() => setIsActive("safeText")}>
+        <img src={isActive === "safeText" ? safeTextActiveImg : safeTextImg} alt=""/>
         <span>재난 문자</span>
-      </button>
-      <button type="button" onClick={() => navigate('/shelterInfo')}>
-        <img src={runImg} alt=""/>
+      </NavLink>
+      <NavLink to="/shelterInfo" onClick={() => setIsActive("shelterInfo")}>
+        <img src={isActive === "shelterInfo" ? runActiveImg : runImg} alt=""/>
         <span>대피소 정보</span>
-      </button>
-      <button type="button" onClick={() => navigate('/escapeTip')}>
-        <img src={alarmImg} alt=""/>
+      </NavLink>
+      <NavLink to="/escapeTip" onClick={() => setIsActive("escapeTip")}>
+        <img src={isActive === "escapeTip" ? alarmActiveImg : alarmImg} alt=""/>
         <span>대피 요령</span>
-      </button>
-      <button type="button" onClick={() => navigate('/liveChat')}>
-        <img src={peopleImg} alt=""/>
-        <span>커뮤니티</span>
-      </button>
+      </NavLink>
+      <NavLink to="/liveChat" onClick={() => setIsActive("liveChat")}>
+        <img src={isActive === "liveChat" ? peopleActiveImg : peopleImg} alt=""/>
+        <span>실시간 대화</span>
+      </NavLink>
     </nav>
   )
 }
