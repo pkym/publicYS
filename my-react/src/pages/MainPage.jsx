@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import IconList from "../components/IconList";
 import SafeTextList from "../components/SafeText/SafeTextList"
 import EmergencyShelterList from "../components/EmergencyShelter/EmergencyShelterList";
 
 export default function MainPage() {
   const [showMoreBtn, setShowMoreBtn] = useState(false);
+  const navigate = useNavigate();
 
   return (
     <>
@@ -18,12 +20,12 @@ export default function MainPage() {
         <button type="button" className="btn-more">더보기</button>
       </div>
       <h4>긴급 대피소</h4>
-      <p>*3개까지만 표시됩니다. 자세한 정보는 '대피소 정보'를 확인해주세요.</p>
+      <p className='tip'>* 3개까지만 표시됩니다. 자세한 정보는 '대피소 정보'를 확인해주세요.</p>
       <div className="box">
         <ul className="emergency-shelter-ul">
           <EmergencyShelterList setShowMoreBtn={setShowMoreBtn}/>
         </ul>
-        {showMoreBtn && <button type="button" className="btn-more">더보기</button>}
+        {showMoreBtn && <button type="button" className="btn-more" onClick={() => navigate('/shelterInfo')}>더보기</button>}
       </div>
     </>
   );
