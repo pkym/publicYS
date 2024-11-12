@@ -8,6 +8,13 @@ export default function MainPage() {
   const [showMoreBtn, setShowMoreBtn] = useState(false);
   const navigate = useNavigate();
 
+  // 오늘 날짜
+  const today = new Date();
+  const year = today.getFullYear();
+  const month = (today.getMonth() + 1).toString().padStart(2, '0');
+  const day = today.getDate().toString().padStart(2, '0');
+  const todayDate = `${year}${month}${day}`;
+
   return (
     <>
       <h4>대피 요령</h4>
@@ -15,9 +22,9 @@ export default function MainPage() {
       <h4>최근 재난 문자</h4>
       <div className="box">
         <ul className="safe-text-ul">
-          <SafeTextList pageNo='1' numOfRows='3'/>
+          <SafeTextList pageNo='1' numOfRows='3' date={todayDate}/>
         </ul>
-        <button type="button" className="btn-more">더보기</button>
+        <button type="button" className="btn-more" onClick={() => navigate('/safeText')}>더보기</button>
       </div>
       <h4>긴급 대피소</h4>
       <p className='tip'>* 3개까지만 표시됩니다. 자세한 정보는 '대피소 정보'를 확인해주세요.</p>

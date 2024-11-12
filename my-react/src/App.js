@@ -24,7 +24,5 @@ const router = createBrowserRouter([
 ])
 
 export default function App() {
-  // const today = new Date().toString().padStart(2, "0");
-  // console.log(today);
   return <RouterProvider router={router}/>
 }

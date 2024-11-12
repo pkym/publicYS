@@ -3,9 +3,6 @@ import SafeTextItem from "./SafeTextItem"
 
 // Provided API key and parameters
 const apiKey = 'ST9W4WW508Z6XV06';
-// const pageNo = '1'; //페이지번호
-// const numOfRows = '100'; //페이지당 개수
-// const crtDt = '20240101'; //조회시작일자
 // const rgnNm = '1'; //지역명
 
 // API endpoint
@@ -13,10 +10,9 @@ const apiKey = 'ST9W4WW508Z6XV06';
 export default function SafeTextList({pageNo, numOfRows, date, regNum}){
     const [data, setData] = useState([]);
     
-    const url = `safeText/V2/api/DSSP-IF-00247?serviceKey=${apiKey}&pageNo=${pageNo}&numOfRows=${numOfRows}`;
+    const url = `safeText/V2/api/DSSP-IF-00247?serviceKey=${apiKey}&pageNo=${pageNo}&numOfRows=${numOfRows}&crtDt=${date}`;
 
     useEffect(() => {
-        console.log('Fetching URL:', url);
         fetch(url)
         .then((response) => {
             console.log(response)
@@ -36,14 +32,10 @@ export default function SafeTextList({pageNo, numOfRows, date, regNum}){
     return(
         <>
             {data ? 
-                // Display fetched data
-                (
-                    Object.values(data).map((values)=>(
-                        <SafeTextItem params={values} key={values.SN}/>
-                    ))
-                ) : (
-                    <p>Loading...</p> // Show loading message while fetching
-                )
+                Object.values(data).map((values)=>(
+                    <SafeTextItem params={values} key={values.SN}/>
+                ))
+                : <p>Loading...</p>
             }
         </>
     )
