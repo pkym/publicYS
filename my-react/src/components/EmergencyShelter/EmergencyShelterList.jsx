@@ -104,7 +104,7 @@ export default function EmergencyShelterList(props) {
         .then((data) => {
           setShelterData(data);
           data.length === 0 ? setEmptyData(true) : setEmptyData(false);
-          data.length > 3 ? props.setShowMoreBtn(true) : props.setShowMoreBtn(false);
+          data.length > 3 ? props.setShelterMoreBtn(true) : props.setShelterMoreBtn(false);
         })
         .catch((error) => {
           console.log("error:" + error);
