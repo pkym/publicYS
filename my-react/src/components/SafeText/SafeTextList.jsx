@@ -7,10 +7,11 @@ const apiKey = "ST9W4WW508Z6XV06";
 
 // API endpoint
 
-export default function SafeTextList({ pageNo, numOfRows, date, regNum }) {
+export default function SafeTextList(props) {
   const [data, setData] = useState([]);
+  const [emptyData, setEmptyData] = useState(false);
 
-  const url = `safeText/V2/api/DSSP-IF-00247?serviceKey=${apiKey}&pageNo=${pageNo}&numOfRows=${numOfRows}&crtDt=${date}`;
+  const url = `safeText/V2/api/DSSP-IF-00247?serviceKey=${apiKey}&pageNo=${props.pageNo}&numOfRows=${props.numOfRows}&crtDt=${props.date}`;
 
   useEffect(() => {
     fetch(url)
@@ -21,22 +22,37 @@ export default function SafeTextList({ pageNo, numOfRows, date, regNum }) {
         return response.json();
       })
       .then((data) => {
-        setData(data.body);
+        if (data.header.resultMsg === 'LIMITED NUMBER OF SERVICE REQUESTS EXCEEDS ERROR') 
+          {
+            setData(data.header.resultMsg)
+          } else {
+            setData(data.body);
+            if (data.length === 0) {
+              setEmptyData(true);
+              props.setShowMoreBtn(false);
+            } else {
+              setEmptyData(false);
+              props.setShowMoreBtn(true);
+            }
+          };
       })
       .catch((error) => {
         console.log("error:" + error);
       });
-  }, [url]);
+  }, [props, url]);
 
   return (
     <>
-      {data ? (
-        Object.values(data).map((values) => (
-          <SafeTextItem params={values} key={values.SN} />
-        ))
-      ) : (
-        <p>Loading...</p>
-      )}
+      {
+        data === 'LIMITED NUMBER OF SERVICE REQUESTS EXCEEDS ERROR' 
+          ? 
+          <p>API 요청 일일 제한 횟수를 초과했습니다.</p> 
+          : !emptyData ? 
+            Object.values(data).map(values => (
+              <SafeTextItem params={values} key={values.SN} />
+            )) 
+            : <p>데이터가 없습니다.</p>
+      }
     </>
   );
 }

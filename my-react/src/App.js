@@ -2,7 +2,7 @@ import React from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import "./styles/reset.css";
 import "./styles/main.css";
-import RootLayout from "./components/layout/RootLayout";
+import RootLayout from "./components/Layout/RootLayout";
 import MainPage from "./pages/MainPage";
 import SafeTextPage from "./pages/SafeTextPage";
 import ShelterInfoPage from "./pages/ShelterInfoPage";

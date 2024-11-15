@@ -5,7 +5,8 @@ import SafeTextList from "../components/SafeText/SafeTextList"
 import EmergencyShelterList from "../components/EmergencyShelter/EmergencyShelterList";
 
 export default function MainPage() {
-  const [showMoreBtn, setShowMoreBtn] = useState(false);
+  const [shelterMoreBtn, setShelterMoreBtn] = useState(false);
+  const [safeTextMoreBtn, setSafeTextMoreBtn] = useState(false);
   const navigate = useNavigate();
 
   // 오늘 날짜
@@ -22,17 +23,17 @@ export default function MainPage() {
       <h4>최근 재난 문자</h4>
       <div className="box">
         <ul className="safe-text-ul">
-          <SafeTextList pageNo='1' numOfRows='3' date={todayDate}/>
+          <SafeTextList setSafeTextMoreBtn={setSafeTextMoreBtn} pageNo='1' numOfRows='3' date={todayDate}/>
         </ul>
-        <button type="button" className="btn-more" onClick={() => navigate('/safeText')}>더보기</button>
+        {safeTextMoreBtn && <button type="button" className="btn-more" onClick={() => navigate('/safeText')}>더보기</button>}
       </div>
       <h4>긴급 대피소</h4>
       <p className='tip'>* 3개까지만 표시됩니다. 자세한 정보는 '대피소 정보'를 확인해주세요.</p>
       <div className="box">
         <ul className="emergency-shelter-ul">
-          <EmergencyShelterList setShowMoreBtn={setShowMoreBtn}/>
+          <EmergencyShelterList setShelterMoreBtn={setShelterMoreBtn}/>
         </ul>
-        {showMoreBtn && <button type="button" className="btn-more" onClick={() => navigate('/shelterInfo')}>더보기</button>}
+        {shelterMoreBtn && <button type="button" className="btn-more" onClick={() => navigate('/shelterInfo')}>더보기</button>}
       </div>
     </>
   );
