@@ -18,6 +18,7 @@ const router = createBrowserRouter([
       { path: "/safeText", element: <SafeTextPage /> },
       { path: "/shelterInfo", element: <ShelterInfoPage /> },
       { path: "/escapeTip", element: <EscapeTipPage /> },
+      { path: "/escapeTip/:id", element: <EscapeTipPage /> },
       { path: "/liveChat", element: <LiveChatPage /> },
     ],
   },

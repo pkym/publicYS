@@ -28,8 +28,8 @@ export default function MainNavigation() {
         <img src={location.pathname === "/shelterInfo" ? runActiveImg : runImg} alt=""/>
         <span>대피소 정보</span>
       </NavLink>
-      <NavLink to="/escapeTip">
-        <img src={location.pathname === "/escapeTip" ? alarmActiveImg : alarmImg} alt=""/>
+      <NavLink to="/escapeTip/1">
+        <img src={location.pathname.includes("/escapeTip") ? alarmActiveImg : alarmImg} alt=""/>
         <span>대피 요령</span>
       </NavLink>
       <NavLink to="/liveChat">
