@@ -83,6 +83,8 @@ h2 {
 .tab-btns {
   display: block;
   margin-bottom: 20px;
+  white-space: nowrap;
+  overflow-x: auto;
 }
 .tab-btns button {
   padding: 6px 14px;
