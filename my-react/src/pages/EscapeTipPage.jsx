@@ -21,7 +21,7 @@ export default function EscapeTipPage() {
       <h2>대피 요령</h2>
       <div className="tab-btns">
         {data.map((tab, idx) => (
-          <button key={idx} onClick={() => activeTabHandler(tab.title)}>{tab.title}</button>
+          <button className={activeTab === tab.title ? 'active' : undefined} key={idx} onClick={() => activeTabHandler(tab.title)}>{tab.title}</button>
         ))}
       </div>
       <div className="tab-content">

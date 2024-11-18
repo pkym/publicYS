@@ -7,7 +7,8 @@ a {
   font-family: "Pretendard", sans-serif;
 }
 h2 {
-  font-size: 24px;
+  margin-bottom: 30px;
+  font-size: 28px;
   font-weight: 700;
 }
 
@@ -76,6 +77,29 @@ h2 {
   width: 100%;
   margin-top: 4px;
   font-size: 14px;
+}
+
+/* tab */
+.tab-btns {
+  display: block;
+  margin-bottom: 20px;
+}
+.tab-btns button {
+  padding: 6px 14px;
+  font-size: 18px;
+  font-weight: 700;
+  color: #d64317;
+  background: #fff;
+  border: 2px solid #d64317;
+  border-radius: 50px;
+}
+.tab-btns button:hover,
+.tab-btns button.active {
+  background: #d64317;
+  color: #fff;
+}
+.tab-btns button + button {
+  margin-left: 8px;
 }
 
 /* form */
