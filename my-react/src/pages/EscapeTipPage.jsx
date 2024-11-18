@@ -1,22 +1,31 @@
 import React, { useState } from 'react';
-import { Link, useParams } from "react-router-dom";
 import data from "../db.json";
+import earthquakeImg from "../assets/img/img_escape_earthquake.png";
+import floodImg from "../assets/img/img_escape_th.jpg"
 
 export default function EscapeTipPage() {
-  const {id} = useParams();
+  const [activeTab, setActiveTab] = useState('지진');
+  const [escapeImg, setEscapeImg] = useState(earthquakeImg);
+
+  function activeTabHandler(title) {
+    setActiveTab(title);
+    switch(title) {
+      case '지진': setEscapeImg(earthquakeImg); break;
+      case '홍수': setEscapeImg(floodImg); break;
+      default: break;
+    }
+  }
 
   return (
     <>
       <h2>대피 요령</h2>
-      <ul className="tab-btns">
-        {[...data].map((tab, idx) => (
-          <li key={idx} isFocused={String(idx) === id}>
-            <Link to={`/escapeTip/${idx+1}`}>{tab.title}</Link>
-          </li>
+      <div className="tab-btns">
+        {data.map((tab, idx) => (
+          <button key={idx} onClick={() => activeTabHandler(tab.title)}>{tab.title}</button>
         ))}
-      </ul>
+      </div>
       <div className="tab-content">
-        <img src={data[id-1].imgUrl} alt={data[id-1].alt}/>
+        <img src={escapeImg} alt={`${activeTab} 대피 요령`}/>
       </div>
     </>
     

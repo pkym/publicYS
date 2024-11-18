@@ -29,10 +29,10 @@ export default function SafeTextList(props) {
             setData(data.body);
             if (data.length === 0) {
               setEmptyData(true);
-              props.setShowMoreBtn(false);
+              props.setSafeTextMoreBtn(false);
             } else {
               setEmptyData(false);
-              props.setShowMoreBtn(true);
+              props.setSafeTextMoreBtn(true);
             }
           };
       })
