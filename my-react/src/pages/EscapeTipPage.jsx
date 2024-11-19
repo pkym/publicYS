@@ -55,7 +55,7 @@ export default function EscapeTipPage() {
         ))}
       </div>
       <div className="tab-content">
-        <img src={escapeImg} alt={`${activeTab} 대피 요령`}/>
+        <img src={escapeImg} alt={`${data[pathId-1].title} 대피 요령`}/>
       </div>
     </>
   )
