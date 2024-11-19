@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import data from "../db.json";
 import earthquakeImg from "../assets/img/img_escape_earthquake.png";
@@ -22,19 +22,23 @@ export default function EscapeTipPage() {
   function activeTabHandler(title, id) {
     setActiveTab(title);
     navigate(`/escapeTip/${id}`);
-    switch(title) {
-      case '지진': setEscapeImg(earthquakeImg); break;
-      case '홍수': setEscapeImg(floodImg); break;
-      case '해일': setEscapeImg(tsunamiImg); break;
-      case '태풍': case '호우': setEscapeImg(typoonImg); break;
-      case '화재': setEscapeImg(fireImg); break;
-      case '산사태': setEscapeImg(avalancheImg); break;
-      case '폭발': setEscapeImg(explosionImg); break;
-      case '대설': setEscapeImg(heavysnowImg); break;
-      case '붕괴': setEscapeImg(breakdownImg); break;
+    
+  }
+
+  useEffect(() => {
+    switch(pathId) {
+      case 1: setEscapeImg(earthquakeImg); break;
+      case 2: setEscapeImg(floodImg); break;
+      case 3: setEscapeImg(tsunamiImg); break;
+      case 4: case 9: setEscapeImg(typoonImg); break;
+      case 5: setEscapeImg(fireImg); break;
+      case 6: setEscapeImg(avalancheImg); break;
+      case 7: setEscapeImg(explosionImg); break;
+      case 8: setEscapeImg(heavysnowImg); break;
+      case 10: setEscapeImg(breakdownImg); break;
       default: break;
     }
-  }
+  }, [pathId])
 
   return (
     <>
