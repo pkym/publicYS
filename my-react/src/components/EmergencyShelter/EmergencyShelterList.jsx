@@ -168,15 +168,17 @@ export default function EmergencyShelterList(props) {
           검색
         </button>
       </div>
-      {
-        (!isSelected ? <p>위치를 선택해주세요.</p> : 
-          !emptyData ? (
-            shelterData.slice(0,3).map(data => (
-              <EmergencyShelterItem params={data} key={data.VT_ACMD_FCLTY_NM} />
-            ))
-          ) : <p>데이터가 없습니다.</p>
-        )
-      }
+      <ul>
+        {
+          (!isSelected ? <p>위치를 선택해주세요.</p> : 
+            !emptyData ? (
+              shelterData.slice(0,props.numOfRows).map(data => (
+                <EmergencyShelterItem params={data} key={data.VT_ACMD_FCLTY_NM} />
+              ))
+            ) : <p>데이터가 없습니다.</p>
+          )
+        }
+      </ul>
     </>
   );
 }

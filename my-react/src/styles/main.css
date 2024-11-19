@@ -346,17 +346,27 @@ section.right .content .icon-box span {
 }
 
 /* 긴급 대피소 */
-.emergency-shelter-ul .list-header {
+.emergency-shelter-wrap li {
+  padding-bottom: 16px;
+  border-bottom: 1px solid #c4c4c4;
+}
+.emergency-shelter-wrap li:last-child {
+  border: 0;
+}
+.emergency-shelter-wrap li + li {
+  margin-top: 16px;
+}
+.emergency-shelter-wrap .list-header {
   margin-bottom: 12px;
 }
-.emergency-shelter-ul .title {
+.emergency-shelter-wrap .title {
   margin-bottom: 8px;
   font-size: 20px;
 }
-.emergency-shelter-ul .desc {
+.emergency-shelter-wrap .desc {
   font-size: 14px;
 }
-.emergency-shelter-ul .tel {
+.emergency-shelter-wrap .tel {
   margin-top: 8px;
   font-size: 13px;
   color: #aaa;

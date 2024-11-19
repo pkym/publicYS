@@ -30,9 +30,9 @@ export default function MainPage() {
       <h4>긴급 대피소</h4>
       <p className='tip'>* 3개까지만 표시됩니다. 자세한 정보는 '대피소 정보'를 확인해주세요.</p>
       <div className="box">
-        <ul className="emergency-shelter-ul">
-          <EmergencyShelterList setShelterMoreBtn={setShelterMoreBtn}/>
-        </ul>
+        <div className="emergency-shelter-wrap">
+          <EmergencyShelterList numOfRows="3" setShelterMoreBtn={setShelterMoreBtn}/>
+        </div>
         {shelterMoreBtn && <button type="button" className="btn-more" onClick={() => navigate('/shelterInfo')}>더보기</button>}
       </div>
     </>
