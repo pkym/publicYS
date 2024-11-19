@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
 import data from "../db.json";
 import earthquakeImg from "../assets/img/img_escape_earthquake.png";
 import floodImg from "../assets/img/img_escape_flood.png";
@@ -11,11 +12,16 @@ import heavysnowImg from "../assets/img/img_escape_heavySnow.png";
 import breakdownImg from "../assets/img/img_escape_breakdown.jpg";
 
 export default function EscapeTipPage() {
-  const [activeTab, setActiveTab] = useState('지진');
+  const navigate = useNavigate();
+  const location = useLocation();
+  const [activeTab, setActiveTab] = useState();
   const [escapeImg, setEscapeImg] = useState(earthquakeImg);
+  const pathname = location.pathname;
+  const pathId = pathname.substring(pathname.lastIndexOf('/')+1)*1;
 
-  function activeTabHandler(title) {
+  function activeTabHandler(title, id) {
     setActiveTab(title);
+    navigate(`/escapeTip/${id}`);
     switch(title) {
       case '지진': setEscapeImg(earthquakeImg); break;
       case '홍수': setEscapeImg(floodImg); break;
@@ -34,14 +40,19 @@ export default function EscapeTipPage() {
     <>
       <h2>대피 요령</h2>
       <div className="tab-btns">
-        {data.map((tab, idx) => (
-          <button className={activeTab === tab.title ? 'active' : undefined} key={idx} onClick={() => activeTabHandler(tab.title)}>{tab.title}</button>
+        {[...data].map((tab, idx) => (
+          <button 
+            key={idx}
+            className={pathId === tab.id ? 'active' : undefined} 
+            onClick={() => activeTabHandler(tab.title, tab.id)}
+          >
+            {tab.title}
+          </button>
         ))}
       </div>
       <div className="tab-content">
         <img src={escapeImg} alt={`${activeTab} 대피 요령`}/>
       </div>
     </>
-    
   )
 }
