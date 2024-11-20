@@ -22,43 +22,38 @@ export default function SafeTextList(props) {
         return response.json();
       })
       .then((data) => {
-        if (data.header.resultMsg === 'LIMITED NUMBER OF SERVICE REQUESTS EXCEEDS ERROR') 
-          {
-            setData(data.header.resultMsg)
+        if (
+          data.header.resultMsg ===
+          "LIMITED NUMBER OF SERVICE REQUESTS EXCEEDS ERROR"
+        ) {
+          setData(data.header.resultMsg);
+        } else {
+          setData(data.body);
+          if (data.length === 0) {
+            setEmptyData(true);
+            props.setSafeTextMoreBtn(false);
           } else {
-            setData(data.body);
-            if (data.length === 0) {
-              setEmptyData(true);
-              props.setSafeTextMoreBtn(false);
-            } else {
-              setEmptyData(false);
-              props.setSafeTextMoreBtn(true);
-            }
-          };
+            setEmptyData(false);
+            props.setSafeTextMoreBtn(true);
+          }
+        }
       })
       .catch((error) => {
         console.log("error:" + error);
       });
-  }, [props, url]);
+  }, []);
 
   return (
     <>
-      {/* undefined or null 에러 때문에 잠시 주석 처리 */}
-      {
-        data === 'LIMITED NUMBER OF SERVICE REQUESTS EXCEEDS ERROR' 
-          ? 
-          <p>API 요청 일일 제한 횟수를 초과했습니다.</p> 
-          : !emptyData ? 
-            Object.values(data).map(values => (
-              <SafeTextItem params={values} key={values.SN} />
-            )) 
-            : <p>데이터가 없습니다.</p>
-      }
-      {/* {
-        data ? Object.values(data).map(values => (
+      {data === "LIMITED NUMBER OF SERVICE REQUESTS EXCEEDS ERROR" ? (
+        <p>API 요청 일일 제한 횟수를 초과했습니다.</p>
+      ) : !emptyData ? (
+        Object.values(data).map((values) => (
           <SafeTextItem params={values} key={values.SN} />
-        )) : <p>데이터가 없습니다.</p>
-      } */}
+        ))
+      ) : (
+        <p>데이터가 없습니다.</p>
+      )}
     </>
   );
 }

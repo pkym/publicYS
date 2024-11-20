@@ -1,7 +1,7 @@
 import React from "react";
 import { Outlet } from "react-router-dom";
-import LeftSection from "../Layout/LeftSection";
-import RightSection from "../Layout/RightSection";
+import LeftSection from "./LeftSection";
+import RightSection from "./RightSection";
 
 export default function RootLayout() {
   return (
