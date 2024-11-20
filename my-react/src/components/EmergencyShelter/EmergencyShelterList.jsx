@@ -61,8 +61,8 @@ export default function EmergencyShelterList(props) {
   }
 
   function getSigunguCodeHandler(e) {
-    setSigunguCode(e.target.value);
-    selectEmdongHandler(e.target.value);
+    setSigunguCode(e.target.value || props.selectedLocation[1]);
+    selectEmdongHandler(e.target.value || props.selectedLocation[2]);
   }
 
   function selectEmdongHandler(sigunguCode) {
@@ -87,33 +87,78 @@ export default function EmergencyShelterList(props) {
   }
 
   function searchShelterHandler() {
-    if (sidoCode.length === 0 || sigunguCode.length === 0 || emdongCode.length === 0) {
-      alert('위치 정보를 모두 입력해주세요');
-      return;
+    // if (
+    //   sidoCode.length === 0 ||
+    //   sigunguCode.length === 0 ||
+    //   emdongCode.length === 0
+    // ) {
+    //   alert("위치 정보를 모두 입력해주세요.");
+    //   return;
+    // } else {
+    //   setIsSelected(true);
+    //   getSelectedLocation();
 
-    } else {
-      setIsSelected(true);
-      const shelterUrl = `shelter/idsiSFK/neo/ext/json/outhouseList/outhouseList_${emdongCode}.json?_=1728528610172`;
-      fetch(shelterUrl)
-        .then((response) => {
-          if (!response.ok) {
-            throw new Error(`Error: ${response.status} ${response.statusText}`);
-          }
-          return response.json();
-        })
-        .then((data) => {
-          setShelterData(data);
-          data.length === 0 ? setEmptyData(true) : setEmptyData(false);
-          data.length > 3 ? props.setShelterMoreBtn(true) : props.setShelterMoreBtn(false);
-        })
-        .catch((error) => {
-          console.log("error:" + error);
-        });
-    };
+    //   let cd = emdongCode || props.selectedLocation[2];
+
+    //   // const shelterUrl = `shelter/idsiSFK/neo/ext/json/outhouseList/outhouseList_${emdongCode}.json?_=1728528610172`;
+    //   const shelterUrl = `shelter/idsiSFK/neo/ext/json/outhouseList/outhouseList_${cd}.json?_=1728528610172`;
+
+    //   fetch(shelterUrl)
+    //     .then((response) => {
+    //       if (!response.ok) {
+    //         throw new Error(`Error: ${response.status} ${response.statusText}`);
+    //       }
+    //       return response.json();
+    //     })
+    //     .then((data) => {
+    //       setShelterData(data);
+    //       console.log(data);
+    //       data.length === 0 ? setEmptyData(true) : setEmptyData(false);
+    //       data.length > 3
+    //         ? props.setShelterMoreBtn(true)
+    //         : props.setShelterMoreBtn(false);
+    //     })
+    //     .catch((error) => {
+    //       console.log("error:" + error);
+    //     });
+    // }
+    setIsSelected(true);
+    if (sidoCode && sigunguCode && emdongCode) getSelectedLocation();
+
+    let emdCd = emdongCode || props.selectedLocation[2];
+
+    const shelterUrl = `shelter/idsiSFK/neo/ext/json/outhouseList/outhouseList_${emdCd}.json?_=1728528610172`;
+
+    fetch(shelterUrl)
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error(`Error: ${response.status} ${response.statusText}`);
+        }
+        return response.json();
+      })
+      .then((data) => {
+        setShelterData(data);
+        data.length === 0 ? setEmptyData(true) : setEmptyData(false);
+        data.length > 3
+          ? props.setShelterMoreBtn(true)
+          : props.setShelterMoreBtn(false);
+      })
+      .catch((error) => {
+        console.log("error:" + error);
+      });
+  }
+
+  function getSelectedLocation() {
+    props.setSelectedLocation([sidoCode, sigunguCode, emdongCode]);
   }
 
   useEffect(() => {
-    selectSidoHandler();  // 첫 렌더링 시 시도 정보 미리 불러오기
+    selectSidoHandler(); // 첫 렌더링 시 시도 정보 미리 불러오기
+
+    if (props.selectedLocation) {
+      // 메인에서 더보기로 페이지 이동할 경우, 첫 렌더링 시 조회된 데이터 전달받아 search
+      searchShelterHandler();
+    }
   }, []);
 
   return (
@@ -169,15 +214,17 @@ export default function EmergencyShelterList(props) {
         </button>
       </div>
       <ul>
-        {
-          (!isSelected ? <p>위치를 선택해주세요.</p> : 
-            !emptyData ? (
-              shelterData.slice(0,props.numOfRows).map(data => (
-                <EmergencyShelterItem params={data} key={data.VT_ACMD_FCLTY_NM} />
-              ))
-            ) : <p>데이터가 없습니다.</p>
-          )
-        }
+        {!isSelected ? (
+          <p>위치를 선택해주세요.</p>
+        ) : !emptyData ? (
+          shelterData
+            .slice(0, props.numOfRows)
+            .map((data) => (
+              <EmergencyShelterItem params={data} key={data.VT_ACMD_FCLTY_NM} />
+            ))
+        ) : (
+          <p>데이터가 없습니다.</p>
+        )}
       </ul>
     </>
   );
