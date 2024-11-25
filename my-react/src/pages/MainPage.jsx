@@ -1,14 +1,16 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import IconList from "../components/IconList";
 import SafeTextList from "../components/SafeText/SafeTextList";
 import EmergencyShelterList from "../components/EmergencyShelter/EmergencyShelterList";
+import { DataContext } from "../context/shelter-context";
 
 export default function MainPage(props) {
   const [shelterMoreBtn, setShelterMoreBtn] = useState(false);
   const [safeTextMoreBtn, setSafeTextMoreBtn] = useState(false);
-  const [selectedLocation, setSelectedLocation] = useState();
+  const [shelterMoreData, setShelterMoreData] = useState(null);
   const navigate = useNavigate();
+  const { setData } = useContext(DataContext); // context 파일에서 설정한 변수/함수명과 다르면 안됨
 
   // 오늘 날짜
   const today = new Date();
@@ -16,6 +18,11 @@ export default function MainPage(props) {
   const month = (today.getMonth() + 1).toString().padStart(2, "0");
   const day = today.getDate().toString().padStart(2, "0");
   const todayDate = `${year}${month}${day}`;
+
+  function shelterMoreHandler() {
+    setData(shelterMoreData);
+    navigate("/shelterInfo");
+  }
 
   return (
     <>
@@ -50,18 +57,14 @@ export default function MainPage(props) {
           <EmergencyShelterList
             numOfRows="3"
             setShelterMoreBtn={setShelterMoreBtn}
-            setSelectedLocation={setSelectedLocation}
+            setShelterMoreData={setShelterMoreData}
           />
         </div>
         {shelterMoreBtn && (
           <button
             type="button"
             className="btn-more"
-            onClick={() =>
-              navigate("/shelterInfo", {
-                state: selectedLocation,
-              })
-            }
+            onClick={shelterMoreHandler}
           >
             더보기
           </button>

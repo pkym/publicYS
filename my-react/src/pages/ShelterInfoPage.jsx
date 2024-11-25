@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useLocation } from "react-router-dom";
 import EmergencyShelterList from "../components/EmergencyShelter/EmergencyShelterList";
+import EmergencyShelterMoreList from "../components/EmergencyShelter/EmergencyShelterMoreList";
 
 export default function ShelterInfoPage() {
   const location = useLocation();
@@ -13,10 +14,10 @@ export default function ShelterInfoPage() {
     <>
       <h2>대피소 정보</h2>
       <div className="emergency-shelter-wrap">
-        <EmergencyShelterList
+        <EmergencyShelterMoreList
           numOfRows={undefined}
-          setShelterMoreBtn={setShelterMoreBtn}
-          selectedLocation={selectedLocation}
+          // setShelterMoreBtn={setShelterMoreBtn}
+          // selectedLocation={selectedLocation}
         />
       </div>
     </>

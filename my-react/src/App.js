@@ -8,6 +8,7 @@ import SafeTextPage from "./pages/SafeTextPage";
 import ShelterInfoPage from "./pages/ShelterInfoPage";
 import EscapeTipPage from "./pages/EscapeTipPage";
 import LiveChatPage from "./pages/LiveChatPage";
+import { DataProvider } from "./context/shelter-context";
 
 const router = createBrowserRouter([
   {
@@ -25,5 +26,9 @@ const router = createBrowserRouter([
 ]);
 
 export default function App() {
-  return <RouterProvider router={router} />;
+  return (
+    <DataProvider>
+      <RouterProvider router={router} />;
+    </DataProvider>
+  );
 }

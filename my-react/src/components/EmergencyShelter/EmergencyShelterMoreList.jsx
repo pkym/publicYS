@@ -1,7 +1,9 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import EmergencyShelterItem from "./EmergencyShelterItem";
+import { DataContext } from "../../context/shelter-context";
 
-export default function EmergencyShelterList(props) {
+export default function EmergencyShelterMoreList() {
+  const { data } = useContext(DataContext);
   const [sidoData, setSidoData] = useState([]);
   const [sigunguData, setSigunguData] = useState([]);
   const [emdongData, setEmdongData] = useState([]);
@@ -11,6 +13,7 @@ export default function EmergencyShelterList(props) {
   const [emdongCode, setEmdongCode] = useState("");
   const [isSelected, setIsSelected] = useState(false);
   const [emptyData, setEmptyData] = useState(false);
+  const [isSubscribed, setIsSubscribed] = useState(true);
 
   function selectSidoHandler() {
     const sidoUrl =
@@ -53,8 +56,8 @@ export default function EmergencyShelterList(props) {
   }
 
   function getSigunguCodeHandler(e) {
-    setSigunguCode(e.target.value || props.selectedLocation[1]);
-    selectEmdongHandler(e.target.value || props.selectedLocation[2]);
+    setSigunguCode(e.target.value);
+    selectEmdongHandler(e.target.value);
   }
 
   function selectEmdongHandler(sigunguCode) {
@@ -76,35 +79,41 @@ export default function EmergencyShelterList(props) {
 
   function getEmdongCodeHandler(e) {
     setEmdongCode(e.target.value);
+    setIsSubscribed(false);
   }
 
   function searchShelterHandler() {
     setIsSelected(true);
 
-    const shelterUrl = `shelter/idsiSFK/neo/ext/json/outhouseList/outhouseList_${emdongCode}.json?_=1728528610172`;
+    if (data.length > 0 && isSubscribed) {
+      setShelterData(data);
+    } else {
+      const shelterUrl = `shelter/idsiSFK/neo/ext/json/outhouseList/outhouseList_${emdongCode}.json?_=1728528610172`;
 
-    fetch(shelterUrl)
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error(`Error: ${response.status} ${response.statusText}`);
-        }
-        return response.json();
-      })
-      .then((data) => {
-        setShelterData(data);
-        props.setShelterMoreData(data);
-        data.length === 0 ? setEmptyData(true) : setEmptyData(false);
-        data.length > 3
-          ? props.setShelterMoreBtn(true)
-          : props.setShelterMoreBtn(false);
-      })
-      .catch((error) => {
-        console.log("error:" + error);
-      });
+      fetch(shelterUrl)
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error(`Error: ${response.status} ${response.statusText}`);
+          }
+          return response.json();
+        })
+        .then((data) => {
+          setShelterData(data);
+          data.length === 0 ? setEmptyData(true) : setEmptyData(false);
+        })
+        .catch((error) => {
+          console.log("error:" + error);
+        });
+    }
   }
 
   useEffect(() => {
     selectSidoHandler(); // 첫 렌더링 시 시도 정보 미리 불러오기
+
+    if (data.length > 0) {
+      setIsSubscribed(true);
+      searchShelterHandler(); // 메인에서 전달받은 더보기 데이터가 있으면 먼저 불러오기
+    }
   }, []);
 
   return (
@@ -163,11 +172,9 @@ export default function EmergencyShelterList(props) {
         {!isSelected ? (
           <p>위치를 선택해주세요.</p>
         ) : !emptyData ? (
-          shelterData
-            .slice(0, props.numOfRows)
-            .map((data) => (
-              <EmergencyShelterItem params={data} key={data.VT_ACMD_FCLTY_NM} />
-            ))
+          shelterData.map((data) => (
+            <EmergencyShelterItem params={data} key={data.VT_ACMD_FCLTY_NM} />
+          ))
         ) : (
           <p>데이터가 없습니다.</p>
         )}
