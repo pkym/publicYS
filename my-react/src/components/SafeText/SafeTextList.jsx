@@ -45,13 +45,19 @@ export default function SafeTextList(props) {
 
   return (
     <>
-      {data === "LIMITED NUMBER OF SERVICE REQUESTS EXCEEDS ERROR" ? (
+      {/* {data === "LIMITED NUMBER OF SERVICE REQUESTS EXCEEDS ERROR" ? (
         <p>API 요청 일일 제한 횟수를 초과했습니다.</p>
       ) : !emptyData ? (
         Object.values(data).map((values) => (
           <SafeTextItem params={values} key={values.SN} />
         ))
       ) : (
+        <p>데이터가 없습니다.</p>
+      )} */}
+      {data ? Object.values(data).map((values) => (
+          <SafeTextItem params={values} key={values.SN} />
+        ))
+       : (
         <p>데이터가 없습니다.</p>
       )}
     </>

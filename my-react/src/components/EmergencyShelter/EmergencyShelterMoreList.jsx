@@ -3,7 +3,7 @@ import EmergencyShelterItem from "./EmergencyShelterItem";
 import { DataContext } from "../../context/shelter-context";
 
 export default function EmergencyShelterMoreList() {
-  const { data } = useContext(DataContext);
+  const { data, dataOps } = useContext(DataContext);
   const [sidoData, setSidoData] = useState([]);
   const [sigunguData, setSigunguData] = useState([]);
   const [emdongData, setEmdongData] = useState([]);
@@ -36,6 +36,8 @@ export default function EmergencyShelterMoreList() {
   function getSidoCodeHandler(e) {
     setSidoCode(e.target.value);
     selectSigunguHandler(e.target.value);
+    // e.target.options[0].text = "시도 선택";
+    // dataOps[0] = "시도 선택";
   }
 
   function selectSigunguHandler(sidoCode) {
@@ -87,6 +89,7 @@ export default function EmergencyShelterMoreList() {
 
     if (data.length > 0 && isSubscribed) {
       setShelterData(data);
+      
     } else {
       const shelterUrl = `shelter/idsiSFK/neo/ext/json/outhouseList/outhouseList_${emdongCode}.json?_=1728528610172`;
 
@@ -110,7 +113,7 @@ export default function EmergencyShelterMoreList() {
   useEffect(() => {
     selectSidoHandler(); // 첫 렌더링 시 시도 정보 미리 불러오기
 
-    if (data.length > 0) {
+    if (data) {
       setIsSubscribed(true);
       searchShelterHandler(); // 메인에서 전달받은 더보기 데이터가 있으면 먼저 불러오기
     }
@@ -125,8 +128,9 @@ export default function EmergencyShelterMoreList() {
             name="sido"
             id="sido"
             onChange={getSidoCodeHandler}
+            onClick={e => e.target.options[0].text = "시도 선택"}
           >
-            <option value="1">시도 선택</option>
+            <option value="1">{dataOps ? dataOps[0] : "시도 선택"}</option>
             {sidoData.map((data) => (
               <option key={data.SIDO_CD} value={data.SIDO_CD}>
                 {data.SIDO_NM}
@@ -138,8 +142,9 @@ export default function EmergencyShelterMoreList() {
             name="sigungu"
             id="sigungu"
             onChange={getSigunguCodeHandler}
+            onClick={e => e.target.options[0].text = "시군구 선택"}
           >
-            <option value="1">시군구 선택</option>
+            <option value="1">{dataOps ? dataOps[1] : "시군구 선택"}</option>
             {sigunguData.map((data) => (
               <option key={data.SGG_CD} value={data.SGG_CD}>
                 {data.SGG_NM}
@@ -151,8 +156,9 @@ export default function EmergencyShelterMoreList() {
             name="emdong"
             id="emdong"
             onChange={getEmdongCodeHandler}
+            onClick={e => e.target.options[0].text = "읍면동 선택"}
           >
-            <option value="1">읍면동 선택</option>
+            <option value="1">{dataOps ? dataOps[2] : "읍면동 선택"}</option>
             {emdongData.map((data) => (
               <option key={data.EMD_CD} value={data.EMD_CD}>
                 {data.EMD_NM}

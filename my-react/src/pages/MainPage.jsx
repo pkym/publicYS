@@ -9,8 +9,9 @@ export default function MainPage(props) {
   const [shelterMoreBtn, setShelterMoreBtn] = useState(false);
   const [safeTextMoreBtn, setSafeTextMoreBtn] = useState(false);
   const [shelterMoreData, setShelterMoreData] = useState(null);
+  const [locationRefs, setLocationRefs] = useState(null);
   const navigate = useNavigate();
-  const { setData } = useContext(DataContext); // context 파일에서 설정한 변수/함수명과 다르면 안됨
+  const { setData, setDataOps } = useContext(DataContext); // context 파일에서 설정한 변수/함수명과 다르면 안됨
 
   // 오늘 날짜
   const today = new Date();
@@ -21,6 +22,7 @@ export default function MainPage(props) {
 
   function shelterMoreHandler() {
     setData(shelterMoreData);
+    setDataOps(locationRefs);
     navigate("/shelterInfo");
   }
 
@@ -58,6 +60,7 @@ export default function MainPage(props) {
             numOfRows="3"
             setShelterMoreBtn={setShelterMoreBtn}
             setShelterMoreData={setShelterMoreData}
+            setLocationRefs={setLocationRefs}
           />
         </div>
         {shelterMoreBtn && (

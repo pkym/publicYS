@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import EmergencyShelterItem from "./EmergencyShelterItem";
 
 export default function EmergencyShelterList(props) {
@@ -11,6 +11,9 @@ export default function EmergencyShelterList(props) {
   const [emdongCode, setEmdongCode] = useState("");
   const [isSelected, setIsSelected] = useState(false);
   const [emptyData, setEmptyData] = useState(false);
+  const [ctxSidoName, setCtxSidoName] = useState("");
+  const [ctxSggName, setCtxSggName] = useState("");
+  const [ctxEmdName, setCtxEmdName] = useState("");
 
   function selectSidoHandler() {
     const sidoUrl =
@@ -33,6 +36,7 @@ export default function EmergencyShelterList(props) {
   function getSidoCodeHandler(e) {
     setSidoCode(e.target.value);
     selectSigunguHandler(e.target.value);
+    setCtxSidoName(e.target.options[e.target.selectedIndex].text);
   }
 
   function selectSigunguHandler(sidoCode) {
@@ -53,8 +57,9 @@ export default function EmergencyShelterList(props) {
   }
 
   function getSigunguCodeHandler(e) {
-    setSigunguCode(e.target.value || props.selectedLocation[1]);
-    selectEmdongHandler(e.target.value || props.selectedLocation[2]);
+    setSigunguCode(e.target.value);
+    selectEmdongHandler(e.target.value);
+    setCtxSggName(e.target.options[e.target.selectedIndex].text);
   }
 
   function selectEmdongHandler(sigunguCode) {
@@ -76,6 +81,7 @@ export default function EmergencyShelterList(props) {
 
   function getEmdongCodeHandler(e) {
     setEmdongCode(e.target.value);
+    setCtxEmdName(e.target.options[e.target.selectedIndex].text);
   }
 
   function searchShelterHandler() {
@@ -93,6 +99,11 @@ export default function EmergencyShelterList(props) {
       .then((data) => {
         setShelterData(data);
         props.setShelterMoreData(data);
+        props.setLocationRefs([
+          ctxSidoName,
+          ctxSggName,
+          ctxEmdName
+        ]);
         data.length === 0 ? setEmptyData(true) : setEmptyData(false);
         data.length > 3
           ? props.setShelterMoreBtn(true)
