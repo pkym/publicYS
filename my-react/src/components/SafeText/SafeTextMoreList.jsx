@@ -1,13 +1,9 @@
 import { useState, useEffect } from "react";
 import SafeTextItem from "./SafeTextItem";
 
-// Provided API key and parameters
 const apiKey = "ST9W4WW508Z6XV06";
-// const rgnNm = '1'; //지역명
 
-// API endpoint
-
-export default function SafeTextList(props) {
+export default function SafeTextMoreList(props) {
   const [data, setData] = useState([]);
   const [emptyData, setEmptyData] = useState(false);
 

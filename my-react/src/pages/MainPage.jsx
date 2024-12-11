@@ -6,12 +6,13 @@ import EmergencyShelterList from "../components/EmergencyShelter/EmergencyShelte
 import { DataContext } from "../context/shelter-context";
 
 export default function MainPage(props) {
-  const [shelterMoreBtn, setShelterMoreBtn] = useState(false);
+  const { setData, setDataOps, setSafeTextData } = useContext(DataContext); // context 파일에서 설정한 변수/함수명과 다르면 안됨
   const [safeTextMoreBtn, setSafeTextMoreBtn] = useState(false);
+  const [safeTextMoreData, setSafeTextMoreData] = useState(null);
+  const [shelterMoreBtn, setShelterMoreBtn] = useState(false);
   const [shelterMoreData, setShelterMoreData] = useState(null);
   const [locationRefs, setLocationRefs] = useState(null);
   const navigate = useNavigate();
-  const { setData, setDataOps } = useContext(DataContext); // context 파일에서 설정한 변수/함수명과 다르면 안됨
 
   // 오늘 날짜
   const today = new Date();
@@ -19,6 +20,11 @@ export default function MainPage(props) {
   const month = (today.getMonth() + 1).toString().padStart(2, "0");
   const day = today.getDate().toString().padStart(2, "0");
   const todayDate = `${year}${month}${day}`;
+
+  function safeTextMoreHandler() {
+    setSafeTextData(safeTextMoreData);
+    navigate("/safeText");
+  }
 
   function shelterMoreHandler() {
     setData(shelterMoreData);
@@ -35,6 +41,7 @@ export default function MainPage(props) {
         <ul className="safe-text-ul">
           <SafeTextList
             setSafeTextMoreBtn={setSafeTextMoreBtn}
+            setSafeTextMoreData={setSafeTextMoreData}
             pageNo="1"
             numOfRows="3"
             date={todayDate}
@@ -44,7 +51,7 @@ export default function MainPage(props) {
           <button
             type="button"
             className="btn-more"
-            onClick={() => navigate("/safeText")}
+            onClick={safeTextMoreHandler}
           >
             더보기
           </button>

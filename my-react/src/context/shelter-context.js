@@ -5,12 +5,15 @@ const DataContext = createContext();
 const DataProvider = ({ children }) => {
   const [data, setData] = useState();
   const [dataOps, setDataOps] = useState();
+  const [safeTextData, setSafeTextData] = useState();
 
   const contextValue = { 
     data, 
     setData, 
     dataOps, 
-    setDataOps 
+    setDataOps,
+    safeTextData,
+    setSafeTextData
   };
 
   return (

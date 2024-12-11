@@ -36,8 +36,6 @@ export default function EmergencyShelterMoreList() {
   function getSidoCodeHandler(e) {
     setSidoCode(e.target.value);
     selectSigunguHandler(e.target.value);
-    // e.target.options[0].text = "시도 선택";
-    // dataOps[0] = "시도 선택";
   }
 
   function selectSigunguHandler(sidoCode) {
