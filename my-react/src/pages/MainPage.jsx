@@ -3,7 +3,8 @@ import { useNavigate } from "react-router-dom";
 import IconList from "../components/IconList";
 import SafeTextList from "../components/SafeText/SafeTextList";
 import EmergencyShelterList from "../components/EmergencyShelter/EmergencyShelterList";
-import { DataContext } from "../context/shelter-context";
+import { DataContext } from "../context/context";
+import getToday from "../components/util/date";
 
 export default function MainPage(props) {
   const { setData, setDataOps, setSafeTextData } = useContext(DataContext); // context 파일에서 설정한 변수/함수명과 다르면 안됨
@@ -13,13 +14,7 @@ export default function MainPage(props) {
   const [shelterMoreData, setShelterMoreData] = useState(null);
   const [locationRefs, setLocationRefs] = useState(null);
   const navigate = useNavigate();
-
-  // 오늘 날짜
-  const today = new Date();
-  const year = today.getFullYear();
-  const month = (today.getMonth() + 1).toString().padStart(2, "0");
-  const day = today.getDate().toString().padStart(2, "0");
-  const todayDate = `${year}${month}${day}`;
+  const todayDate = getToday();
 
   function safeTextMoreHandler() {
     setSafeTextData(safeTextMoreData);

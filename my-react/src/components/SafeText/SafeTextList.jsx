@@ -5,8 +5,6 @@ import SafeTextItem from "./SafeTextItem";
 const apiKey = "ST9W4WW508Z6XV06";
 // const rgnNm = '1'; //지역명
 
-// API endpoint
-
 export default function SafeTextList(props) {
   const [data, setData] = useState([]);
   const [emptyData, setEmptyData] = useState(false);
@@ -28,13 +26,13 @@ export default function SafeTextList(props) {
         ) {setData(data.header.resultMsg);} 
         else {
           setData(data.body);
-          props.setSafeTextMoreData(data.body);
+          // props.setSafeTextMoreData(data.body);
           if (data.length === 0) {
             setEmptyData(true);
-            props.setSafeTextMoreBtn(false);
+            // props.setSafeTextMoreBtn(false);
           } else {
             setEmptyData(false);
-            props.setSafeTextMoreBtn(true);
+            // props.setSafeTextMoreBtn(true);
           }
         }
       })

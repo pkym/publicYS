@@ -8,7 +8,7 @@ import SafeTextPage from "./pages/SafeTextPage";
 import ShelterInfoPage from "./pages/ShelterInfoPage";
 import EscapeTipPage from "./pages/EscapeTipPage";
 import LiveChatPage from "./pages/LiveChatPage";
-import { DataProvider } from "./context/shelter-context";
+import { DataProvider } from "./context/context";
 
 const router = createBrowserRouter([
   {

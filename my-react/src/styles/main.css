@@ -154,11 +154,6 @@ section.left h1 span {
   color: #d64317;
 }
 
-section.left div ul {
-  list-style-type: none;
-  margin: 0px;
-  padding: 0px;
-}
 section.left .info-ul li {
   display: flex;
   align-items: flex-start;
@@ -370,6 +365,18 @@ section.right .content .icon-box span {
   margin-top: 8px;
   font-size: 13px;
   color: #aaa;
+}
+
+/******************** 재난문자 ********************/
+.safe-text-ul li {
+  padding-bottom: 16px;
+  border-bottom: 1px solid #c4c4c4;
+}
+.safe-text-ul li + li {
+  margin-top: 20px;
+}
+.safe-text-ul li:last-child {
+  border: none;
 }
 
 /******************** 반응형 ********************/

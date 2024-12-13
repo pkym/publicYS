@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
 import EmergencyShelterItem from "./EmergencyShelterItem";
-import { DataContext } from "../../context/shelter-context";
+import { DataContext } from "../../context/context";
 
 export default function EmergencyShelterMoreList() {
   const { data, dataOps } = useContext(DataContext);

@@ -24,13 +24,10 @@ export default function SafeTextMoreList(props) {
         ) {setData(data.header.resultMsg);} 
         else {
           setData(data.body);
-          props.setSafeTextMoreData(data.body);
           if (data.length === 0) {
             setEmptyData(true);
-            props.setSafeTextMoreBtn(false);
           } else {
             setEmptyData(false);
-            props.setSafeTextMoreBtn(true);
           }
         }
       })
