@@ -9,7 +9,6 @@ export default function EmergencyShelterMoreList() {
   const [emdongData, setEmdongData] = useState([]);
   const [shelterData, setShelterData] = useState([]);
   const [sidoCode, setSidoCode] = useState("");
-  const [sigunguCode, setSigunguCode] = useState("");
   const [emdongCode, setEmdongCode] = useState("");
   const [isSelected, setIsSelected] = useState(false);
   const [emptyData, setEmptyData] = useState(false);
@@ -56,7 +55,6 @@ export default function EmergencyShelterMoreList() {
   }
 
   function getSigunguCodeHandler(e) {
-    setSigunguCode(e.target.value);
     selectEmdongHandler(e.target.value);
   }
 
