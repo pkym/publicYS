@@ -3,15 +3,15 @@ import React, { createContext, useState } from "react";
 const DataContext = createContext();
 
 const DataProvider = ({ children }) => {
-  const [data, setData] = useState();
-  const [dataOps, setDataOps] = useState();
+  const [shelterCtxData, setShelterCtxData] = useState();
+  const [shelterCtxDataOps, setShelterCtxDataOps] = useState();
   const [safeTextData, setSafeTextData] = useState();
 
   const contextValue = { 
-    data, 
-    setData, 
-    dataOps, 
-    setDataOps,
+    shelterCtxData, 
+    setShelterCtxData, 
+    shelterCtxDataOps, 
+    setShelterCtxDataOps,
     safeTextData,
     setSafeTextData
   };

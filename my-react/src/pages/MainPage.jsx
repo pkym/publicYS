@@ -7,8 +7,7 @@ import { DataContext } from "../context/context";
 import getToday from "../components/util/date";
 
 export default function MainPage(props) {
-  const { setData, setDataOps, setSafeTextData } = useContext(DataContext); // context 파일에서 설정한 변수/함수명과 다르면 안됨
-  const [safeTextMoreBtn, setSafeTextMoreBtn] = useState(false);
+  const { setShelterCtxData, setShelterCtxDataOps, setSafeTextData } = useContext(DataContext); // context 파일에서 설정한 변수/함수명과 다르면 안됨
   const [safeTextMoreData, setSafeTextMoreData] = useState(null);
   const [shelterMoreBtn, setShelterMoreBtn] = useState(false);
   const [shelterMoreData, setShelterMoreData] = useState(null);
@@ -22,8 +21,8 @@ export default function MainPage(props) {
   }
 
   function shelterMoreHandler() {
-    setData(shelterMoreData);
-    setDataOps(locationRefs);
+    setShelterCtxData(shelterMoreData);
+    setShelterCtxDataOps(locationRefs);
     navigate("/shelterInfo");
   }
 
@@ -35,22 +34,19 @@ export default function MainPage(props) {
       <div className="box">
         <ul className="safe-text-ul">
           <SafeTextList
-            setSafeTextMoreBtn={setSafeTextMoreBtn}
             setSafeTextMoreData={setSafeTextMoreData}
             pageNo="1"
             numOfRows="3"
             date={todayDate}
           />
         </ul>
-        {safeTextMoreBtn && (
-          <button
-            type="button"
-            className="btn-more"
-            onClick={safeTextMoreHandler}
-          >
-            더보기
-          </button>
-        )}
+        <button
+          type="button"
+          className="btn-more"
+          onClick={safeTextMoreHandler}
+        >
+          더보기
+        </button>
       </div>
       <h4>긴급 대피소</h4>
       <p className="tip">
