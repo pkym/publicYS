@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useContext } from "react";
 import EmergencyShelterItem from "./EmergencyShelterItem";
 import { DataContext } from "../../context/context";
+import Pagination from "../util/Pagination";
 
 export default function EmergencyShelterMoreList() {
   const { shelterCtxData, shelterCtxDataOps } = useContext(DataContext);
@@ -12,7 +13,14 @@ export default function EmergencyShelterMoreList() {
   const [emdongCode, setEmdongCode] = useState("");
   const [isSelected, setIsSelected] = useState(false);
   const [emptyData, setEmptyData] = useState(false);
+
+  // context
   const [isSubscribed, setIsSubscribed] = useState(true);
+
+  // pagination
+  const [currentPage, setCurrentPage] = useState(1); 
+  const [currentItems, setCurrentItems] = useState([]);
+  const itemsPerPage = 5; // 페이지당 아이템 수
 
   function selectSidoHandler() {
     const sidoUrl =
@@ -173,13 +181,21 @@ export default function EmergencyShelterMoreList() {
         {!isSelected ? (
           <p>위치를 선택해주세요.</p>
         ) : !emptyData ? (
-          shelterData.map((data) => (
+          currentItems.map((data) => (
             <EmergencyShelterItem params={data} key={data.VT_ACMD_FCLTY_NM} />
           ))
         ) : (
           <p>데이터가 없습니다.</p>
         )}
       </ul>
+      <Pagination 
+        itemsPerPage={itemsPerPage} 
+        totalItems={shelterData.length} 
+        currentPage={currentPage} 
+        setCurrentPage={setCurrentPage} 
+        data={shelterData} 
+        setCurrentItems={setCurrentItems}
+      />
     </>
   );
 }
