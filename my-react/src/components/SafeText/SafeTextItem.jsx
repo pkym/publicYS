@@ -6,9 +6,10 @@ export default function SafeTextItem({params}){
               <span className="text-type">{params.EMRG_STEP_NM}문자</span>
               <span className="text-date">{params.CRT_DT}</span>
           </div>
-          <p className="text-item-content">
-            {params.MSG_CN}
-          </p>
+          <div className="text-item-content">
+            <p>{params.MSG_CN}</p>
+            <p className="sm">수신지역: {params.RCPTN_RGN_NM}</p>
+          </div>
       </li>
     </>
   )

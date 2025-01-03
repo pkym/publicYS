@@ -339,6 +339,10 @@ section.right .content .icon-box span {
 .text-item-content a {
   color: #0682FE;
 }
+.text-item-content .sm {
+  color: #c4c4c4;
+  font-size: 14px;
+}
 
 /* 긴급 대피소 */
 .emergency-shelter-wrap li {
