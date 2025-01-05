@@ -2,7 +2,7 @@ import React from "react";
 import SafeTextMoreList from "../components/SafeText/SafeTextMoreList";
 import getToday from "../components/util/date";
 
-export default function SafeTextPage(props) {
+export default function SafeTextPage() {
   const todayDate = getToday();
 
   return (

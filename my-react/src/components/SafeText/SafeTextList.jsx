@@ -23,8 +23,9 @@ export default function SafeTextList(props) {
         if (
           data.header.resultMsg ===
           "LIMITED NUMBER OF SERVICE REQUESTS EXCEEDS ERROR"
-        ) {setData(data.header.resultMsg);} 
-        else {
+        ) {
+          setData(data.header.resultMsg);
+        } else {
           setData(data.body);
           if (data.length === 0) {
             setEmptyData(true);
@@ -49,10 +50,11 @@ export default function SafeTextList(props) {
       ) : (
         <p>데이터가 없습니다.</p>
       )} */}
-      {data ? Object.values(data).map((values) => (
-          <SafeTextItem params={values} key={values.SN} />
-        ))
-       : (
+      {data ? (
+        Object.values(data)
+          .sort((a, b) => b.SN - a.SN) // 가장 최근 문자부터
+          .map((values) => <SafeTextItem props={values} key={values.SN} />)
+      ) : (
         <p>데이터가 없습니다.</p>
       )}
     </>

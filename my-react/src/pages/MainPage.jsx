@@ -6,8 +6,9 @@ import EmergencyShelterList from "../components/EmergencyShelter/EmergencyShelte
 import { DataContext } from "../context/context";
 import getToday from "../components/util/date";
 
-export default function MainPage(props) {
-  const { setShelterCtxData, setShelterCtxDataOps, setSafeTextData } = useContext(DataContext); // context 파일에서 설정한 변수/함수명과 다르면 안됨
+export default function MainPage() {
+  const { setShelterCtxData, setShelterCtxDataOps, setSafeTextData } =
+    useContext(DataContext); // context 파일에서 설정한 변수/함수명과 다르면 안됨
   const [safeTextMoreData, setSafeTextMoreData] = useState(null);
   const [shelterMoreBtn, setShelterMoreBtn] = useState(false);
   const [shelterMoreData, setShelterMoreData] = useState(null);

@@ -14,6 +14,24 @@ export default function SafeTextMoreList(props) {
   // 발송 지역별 url
   const sendingAreaUrl = `safeText/V2/api/DSSP-IF-00247?serviceKey=${apiKey}&pageNo=1&crtDt=${props.date}&rgnNm=${sidoName}`;
 
+  function selectSidoHandler() {
+    const sidoUrl =
+      "shelter/idsiSFK/neo/ext/json/arcd/bd/bd_sido.json?_=1728528610168";
+    fetch(sidoUrl)
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error(`Error: ${response.status} ${response.statusText}`);
+        }
+        return response.json();
+      })
+      .then((data) => {
+        setSidoData(data);
+      })
+      .catch((error) => {
+        console.log("error:" + error);
+      });
+  }
+
   function setSidoNameHandler(e) {
     setSidoName(e.target.selectedOptions[0].text);
   }
@@ -68,24 +86,6 @@ export default function SafeTextMoreList(props) {
       });
   }
 
-  function selectSidoHandler() {
-    const sidoUrl =
-      "shelter/idsiSFK/neo/ext/json/arcd/bd/bd_sido.json?_=1728528610168";
-    fetch(sidoUrl)
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error(`Error: ${response.status} ${response.statusText}`);
-        }
-        return response.json();
-      })
-      .then((data) => {
-        setSidoData(data);
-      })
-      .catch((error) => {
-        console.log("error:" + error);
-      });
-  }
-
   useEffect(() => {
     fetchData();
     selectSidoHandler(); // 초기 렌더링 시 전체 시,도 데이터 불러오기
@@ -132,9 +132,9 @@ export default function SafeTextMoreList(props) {
           <p>데이터가 없습니다.</p>
         )} */}
         {data ? (
-          Object.values(data).map((values) => (
-            <SafeTextItem params={values} key={values.SN} />
-          ))
+          Object.values(data)
+            .sort((a, b) => b.SN - a.SN) // 가장 최근 문자부터
+            .map((values) => <SafeTextItem props={values} key={values.SN} />)
         ) : (
           <p>데이터가 없습니다.</p>
         )}
