@@ -1,18 +1,19 @@
 import { useState, useEffect } from "react";
 import SafeTextItem from "./SafeTextItem";
+import getToday from "../util/date";
 
 const apiKey = "ST9W4WW508Z6XV06";
 
 export default function SafeTextMoreList(props) {
   const [sidoData, setSidoData] = useState([]);
   const [sidoName, setSidoName] = useState("");
+  const [date, setDate] = useState(props.date);
+  const [filteringDate, setFilteringDate] = useState("");
   const [data, setData] = useState([]);
+  const todayDate = getToday();
 
-  // 전체 지역 조회 url
-  const url = `safeText/V2/api/DSSP-IF-00247?serviceKey=${apiKey}&pageNo=${props.pageNo}&crtDt=${props.date}`;
-
-  // 발송 지역별 url
-  const sendingAreaUrl = `safeText/V2/api/DSSP-IF-00247?serviceKey=${apiKey}&pageNo=1&crtDt=${props.date}&rgnNm=${sidoName}`;
+  let url = `safeText/V2/api/DSSP-IF-00247?serviceKey=${apiKey}&pageNo=${props.pageNo}&crtDt=${date}&numOfRows=30`;
+  url += sidoName ? `&rgnNm=${sidoName}` : "";
 
   function selectSidoHandler() {
     const sidoUrl =
@@ -36,11 +37,16 @@ export default function SafeTextMoreList(props) {
     setSidoName(e.target.selectedOptions[0].text);
   }
 
-  function searchSafeTextHandler() {
-    sidoName !== "발송 지역" ? fetchByRegionData() : fetchData();
+  function setDateHandler(e) {
+    setDate(e.target.value.replace(/-/g, ""));
+    setFilteringDate(e.target.value.replace(/-/g, "/"));
   }
 
-  function fetchData() {
+  function searchSafeTextHandler() {
+    fetchData(url);
+  }
+
+  function fetchData(url) {
     fetch(url)
       .then((response) => {
         if (!response.ok) {
@@ -55,30 +61,16 @@ export default function SafeTextMoreList(props) {
         ) {
           setData(data.header.resultMsg);
         } else {
-          setData(data.body);
-        }
-      })
-      .catch((error) => {
-        console.log("error:" + error);
-      });
-  }
-
-  function fetchByRegionData() {
-    fetch(sendingAreaUrl)
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error(`Error: ${response.status} ${response.statusText}`);
-        }
-        return response.json();
-      })
-      .then((data) => {
-        if (
-          data.header.resultMsg ===
-          "LIMITED NUMBER OF SERVICE REQUESTS EXCEEDS ERROR"
-        ) {
-          setData(data.header.resultMsg);
-        } else {
-          setData(data.body);
+          if (!data.body) {
+            setData([""]);
+          } else if (!filteringDate) {
+            setData(data.body);
+          } else if (filteringDate) {
+            const dateFilteredData = Object.values(data.body).filter(
+              (values) => values.CRT_DT.split(" ")[0] === filteringDate
+            );
+            setData(dateFilteredData);
+          }
         }
       })
       .catch((error) => {
@@ -87,14 +79,14 @@ export default function SafeTextMoreList(props) {
   }
 
   useEffect(() => {
-    fetchData();
+    fetchData(url);
     selectSidoHandler(); // 초기 렌더링 시 전체 시,도 데이터 불러오기
   }, []);
 
   return (
     <>
       <div className="form-wrap">
-        <div className="form-selects">
+        <div className="form-options">
           <select
             className="form-select"
             name="sido"
@@ -109,9 +101,15 @@ export default function SafeTextMoreList(props) {
               </option>
             ))}
           </select>
-          <select className="form-select" name="disasterCtg" id="disasterCtg">
-            <option value="1">재난 유형</option>
-          </select>
+          <input
+            className="form-control"
+            type="date"
+            name="dateInput"
+            id="dateInput"
+            placeholder="날짜 입력"
+            max={todayDate}
+            onChange={setDateHandler}
+          />
         </div>
         <button
           type="button"
@@ -131,9 +129,9 @@ export default function SafeTextMoreList(props) {
         ) : (
           <p>데이터가 없습니다.</p>
         )} */}
-        {data ? (
+        {data && data.length > 0 ? (
           Object.values(data)
-            .sort((a, b) => b.SN - a.SN) // 가장 최근 문자부터
+            .sort((a, b) => b.SN - a.SN)
             .map((values) => <SafeTextItem props={values} key={values.SN} />)
         ) : (
           <p>데이터가 없습니다.</p>

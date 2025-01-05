@@ -9,7 +9,7 @@ export default function SafeTextPage() {
     <>
       <h2>재난 문자</h2>
       <div className="safeText-wrap">
-        <SafeTextMoreList pageNo="1" numOfRows="30" date={todayDate} />
+        <SafeTextMoreList pageNo="1" date={todayDate} />
       </div>
     </>
   );
