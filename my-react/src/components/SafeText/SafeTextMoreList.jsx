@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import SafeTextItem from "./SafeTextItem";
 import getToday from "../util/date";
+import Pagination from "../util/Pagination";
 
 const apiKey = "ST9W4WW508Z6XV06";
 
@@ -11,6 +12,11 @@ export default function SafeTextMoreList(props) {
   const [filteringDate, setFilteringDate] = useState("");
   const [data, setData] = useState([]);
   const todayDate = getToday();
+
+  // pagination
+  const [currentPage, setCurrentPage] = useState(1);
+  const [currentItems, setCurrentItems] = useState([]);
+  const itemsPerPage = 5; // 페이지당 아이템 수
 
   let url = `safeText/V2/api/DSSP-IF-00247?serviceKey=${apiKey}&pageNo=${props.pageNo}&crtDt=${date}&numOfRows=30`;
   url += sidoName ? `&rgnNm=${sidoName}` : "";
@@ -130,13 +136,21 @@ export default function SafeTextMoreList(props) {
           <p>데이터가 없습니다.</p>
         )} */}
         {data && data.length > 0 ? (
-          Object.values(data)
+          Object.values(currentItems)
             .sort((a, b) => b.SN - a.SN)
             .map((values) => <SafeTextItem props={values} key={values.SN} />)
         ) : (
           <p>데이터가 없습니다.</p>
         )}
       </ul>
+      <Pagination
+        itemsPerPage={itemsPerPage}
+        totalItems={data.length}
+        currentPage={currentPage}
+        setCurrentPage={setCurrentPage}
+        data={data}
+        setCurrentItems={setCurrentItems}
+      />
     </>
   );
 }
