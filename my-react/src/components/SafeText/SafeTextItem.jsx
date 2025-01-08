@@ -1,4 +1,11 @@
+import React, { useEffect } from "react";
+import DropDownList from "../util/DropDownList";
+
 export default function SafeTextItem({ props }) {
+  useEffect(() => {
+    console.log(props.RCPTN_RGN_NM.length);
+  }, []);
+
   return (
     <>
       <li className="text-item">

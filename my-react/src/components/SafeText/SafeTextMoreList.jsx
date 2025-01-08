@@ -40,7 +40,9 @@ export default function SafeTextMoreList(props) {
   }
 
   function setSidoNameHandler(e) {
-    setSidoName(e.target.selectedOptions[0].text);
+    const selectedSido = e.target.selectedOptions[0].text;
+    if (selectedSido === "전체") return;
+    setSidoName(selectedSido);
   }
 
   function setDateHandler(e) {
@@ -100,7 +102,10 @@ export default function SafeTextMoreList(props) {
             onChange={setSidoNameHandler}
             onClick={(e) => (e.target.options[0].text = "발송 지역")}
           >
-            <option value="1">발송 지역</option>
+            <option value="1" disabled>
+              발송 지역
+            </option>
+            <option value="all">전체</option>
             {sidoData.map((data) => (
               <option key={data.SIDO_CD} value={data.SIDO_CD}>
                 {data.SIDO_NM}

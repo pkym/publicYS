@@ -31,17 +31,15 @@
 }
 
 #pagination li.active {
-  background: #d64317;
-  box-shadow: 0 3px 6px rgba(0,0,0,.15);
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.15);
 }
 
 #pagination li.active a {
-  color: #fff;
   font-weight: 700;
 }
 
 #pagination li:hover {
-  box-shadow: 0 3px 6px rgba(0,0,0,.15);
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.15);
 }
 #pagination li:hover a {
   font-weight: 700;
