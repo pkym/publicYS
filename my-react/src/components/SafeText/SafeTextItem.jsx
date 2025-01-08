@@ -1,9 +1,13 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import DropDownList from "../util/DropDownList";
 
 export default function SafeTextItem({ props }) {
+  const [rcpRegions, setRcpRegions] = useState([]);
+
   useEffect(() => {
-    console.log(props.RCPTN_RGN_NM.length);
+    if (props.RCPTN_RGN_NM) {
+      setRcpRegions(props.RCPTN_RGN_NM.split(","));
+    }
   }, []);
 
   return (
@@ -15,7 +19,14 @@ export default function SafeTextItem({ props }) {
         </div>
         <div className="text-item-content">
           <p>{props.MSG_CN}</p>
-          <p className="sm">수신지역: {props.RCPTN_RGN_NM}</p>
+          <p className="sm">
+            수신지역:
+            {rcpRegions.length > 3 ? (
+              <DropDownList props={Object.values(rcpRegions)} />
+            ) : (
+              <span className="txt">{props.RCPTN_RGN_NM}</span>
+            )}
+          </p>
         </div>
       </li>
     </>
